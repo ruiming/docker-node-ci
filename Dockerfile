@@ -69,10 +69,8 @@ RUN { \
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/mysql.conf.d/mysqld.cnf \
 	&& echo '[mysqld]\nskip-host-cache\nskip-name-resolve' > /etc/mysql/conf.d/docker.cnf
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
+COPY docker-mysql-entrypoint.sh /usr/local/bin/
 
 # Reset entrypoint and cmd
 ENTRYPOINT []
 CMD []
-
