@@ -66,3 +66,4 @@ RUN set -ex \
 # Reset entrypoint to shell
 ENTRYPOINT []
 CMD echo "Container ready!"
+
