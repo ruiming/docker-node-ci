@@ -2,7 +2,7 @@
 # https://github.com/docker-library/mysql/tree/master/5.7
 # https://github.com/nodejs/docker-node/blob/master/8.5/Dockerfile
 
-FROM node:8.5
+FROM node:9
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mysql && useradd -r -g mysql mysql
