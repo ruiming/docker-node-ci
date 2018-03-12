@@ -1,11 +1,12 @@
 # Reference:
 # https://github.com/docker-library/mysql/tree/master/5.7
-# https://github.com/nodejs/docker-node/blob/master/8.5/Dockerfile
-
+# https://github.com/nodejs/docker-node/blob/master/9/Dockerfile
 FROM node:9
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mysql && useradd -r -g mysql mysql
+
+RUN apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr && rm -rf /var/lib/apt/lists/*
 
 # add gosu for easy step-down from root
 ENV GOSU_VERSION 1.7
@@ -71,8 +72,9 @@ RUN { \
 	&& echo '[mysqld]\nskip-host-cache\nskip-name-resolve' > /etc/mysql/conf.d/docker.cnf
 
 VOLUME /var/lib/mysql
-COPY docker-mysql-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-mysql-entrypoint.sh
+
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
 
 # Reset entrypoint and cmd
 ENTRYPOINT []
